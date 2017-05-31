@@ -1,8 +1,8 @@
-# \<paper-tree\>
+# \<ct-paper-tree\>
 
-[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg?style=flat-square)](https://beta.webcomponents.org/element/vpusher/paper-tree)
+[![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg?style=flat-square)](https://beta.webcomponents.org/element/vpusher/ct-paper-tree)
 
-Display a browsable tree of nodes (`<paper-tree-node>`) with expandable/collapsible capabilities and actions menu for each node.
+Display a browsable tree of nodes (`<ct-paper-tree-node>`) with expandable/collapsible capabilities and actions menu for each node.
 
 Each node is defined by a **name**, an **icon**, an **open** state (expanded/collapsed) and an **actions** menu.
 
@@ -14,14 +14,14 @@ Example:
     <script src="../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../iron-icons/notification-icons.html">
     <link rel="import" href="../iron-icons/av-icons.html">
-    <link rel="import" href="paper-tree.html">
+    <link rel="import" href="ct-paper-tree.html">
     <next-code-block></next-code-block>
   </template>
 </custom-element-demo>
 ```
 -->
 ```html
-<paper-tree data='{
+<ct-paper-tree data='{
     "name": "Media Center",
     "icon": "weekend",
     "open": true,
@@ -53,7 +53,7 @@ Example:
         "label": "Play",
         "event": "play"
     }]'>
- </paper-tree>
+ </ct-paper-tree>
 ```
 
 ## Installation
@@ -69,10 +69,10 @@ polymer serve -o
 
 ## Usage
 
-Add a `<paper-tree>` element to your page and set the `data` attribute:
+Add a `<ct-paper-tree>` element to your page and set the `data` attribute:
 
 ```
-<paper-tree data='{"name": "root"}'><paper-tree>
+<ct-paper-tree data='{"name": "root"}'><ct-paper-tree>
 ```
 
 See documentation to know the options and structure of the `data` attribute.

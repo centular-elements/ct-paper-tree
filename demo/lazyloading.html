@@ -3,7 +3,7 @@
 <html>
 <head>
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-    <link rel="import" href="../paper-tree.html" />
+    <link rel="import" href="../ct-paper-tree.html" />
 </head>
 <body>
 
@@ -14,19 +14,19 @@
         }
 
         #tree {
-            --paper-tree-toggle-theme: {
+            --ct-paper-tree-toggle-theme: {
                 animation: blinker 1s linear infinite;
                 content: '⧖';
                 margin-left: -21px;
             };
         }
     </style>
-    <h2>Lazy loading paper-tree demo</h2>
+    <h2>Lazy loading ct-paper-tree demo</h2>
     <p>
         Here we use the 'toggle' event to lazy load grandchildren.<br>
         We've added some delay so you can see the effect of the loading icon.
     </p>
-    <paper-tree id="tree" on-toggle="onToggle" data='{"name": "Loading..."}'></paper-tree>
+    <ct-paper-tree id="tree" on-toggle="onToggle" data='{"name": "Loading..."}'></ct-paper-tree>
     <script>
 
     var template = document.querySelector('#t'),
@@ -55,9 +55,9 @@
     template.setLoadingState = function(node, enabled) {
 
         if (enabled) {
-            node.customStyle['--paper-tree-toggle-theme'] = 'animation: blinker 1s linear infinite; content: \'⧖\'; margin-left: -21px;';
+            node.customStyle['--ct-paper-tree-toggle-theme'] = 'animation: blinker 1s linear infinite; content: \'⧖\'; margin-left: -21px;';
         } else {
-            node.customStyle['--paper-tree-toggle-theme'] = ';';
+            node.customStyle['--ct-paper-tree-toggle-theme'] = ';';
         }
 
         node.updateStyles();

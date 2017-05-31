@@ -9,17 +9,17 @@
     <script src="../../web-component-tester/browser.js"></script>
 
     <!-- Import the element to test -->
-    <link rel="import" href="../paper-tree.html">
+    <link rel="import" href="../ct-paper-tree.html">
 </head>
 <body>
 
 <!-- You can use the document as a place to set up your fixtures. -->
-<paper-tree></paper-tree>
+<ct-paper-tree></ct-paper-tree>
 
 <script>
-var tree = document.querySelector('paper-tree');
+var tree = document.querySelector('ct-paper-tree');
 
-suite('<paper-tree>', function() {
+suite('<ct-paper-tree>', function() {
 
     test('defines the default "data" property to `null`', function() {
         assert.equal(tree.data, null);
@@ -34,7 +34,7 @@ suite('<paper-tree>', function() {
         assert.equal(tree.$.root.data, tree.data);
     });
 
-    test('cannot select any other element than a <paper-tree-node>', function() {
+    test('cannot select any other element than a <ct-paper-tree-node>', function() {
         var found = false;
 
         tree._selectNode({ detail: document.body });
@@ -50,7 +50,7 @@ suite('<paper-tree>', function() {
         assert.equal(tree.selected, null);
     });
 
-    test('can select any <paper-tree-node>', function() {
+    test('can select any <ct-paper-tree-node>', function() {
         var found = false;
 
         tree._selectNode({ detail: tree.$.root });
@@ -82,7 +82,7 @@ suite('<paper-tree>', function() {
         assert.equal(tree.selected, null);
     });
 
-    test('listen for selection coming from underneath <paper-tree-node>s', function(done) {
+    test('listen for selection coming from underneath <ct-paper-tree-node>s', function(done) {
         tree.addEventListener('select', function(event) {
             assert.equal(event.detail, tree.$.root);
             done();

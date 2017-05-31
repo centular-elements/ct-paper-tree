@@ -4,12 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <title>paper-tree Demo</title>
+    <title>ct-paper-tree Demo</title>
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
     <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
     <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
-    <link rel="import" href="../paper-tree.html">
+    <link rel="import" href="../ct-paper-tree.html">
 
     <style is="custom-style" include="demo-pages-shared-styles"></style>
 </head>
@@ -21,7 +21,7 @@
 
     <demo-snippet>
         <template>
-            <paper-tree id="tree1"></paper-tree>
+            <ct-paper-tree id="tree1"></ct-paper-tree>
             <script>
 
                 var tree = document.querySelector('#tree1');
@@ -38,7 +38,7 @@
     <h3>Basic demo with one root node and some children</h3>
     <demo-snippet>
         <template>
-            <paper-tree id="tree2"></paper-tree>
+            <ct-paper-tree id="tree2"></ct-paper-tree>
             <script>
 
                 var tree = document.querySelector('#tree2');
@@ -105,7 +105,7 @@
     <!--<h3>Complex tree demo</h3>
     <demo-snippet>
         <template>
-            <paper-tree id="tree3"></paper-tree>
+            <ct-paper-tree id="tree3"></ct-paper-tree>
             <script>
 
                 var tree = document.querySelector('#tree3');
@@ -223,7 +223,7 @@
                     }
 
                     #tree {
-                        &#45;&#45;paper-tree-toggle-theme: {
+                        &#45;&#45;ct-paper-tree-toggle-theme: {
                             animation: blinker 1s linear infinite;
                             content: '⧖';
                             margin-left: -21px;
@@ -231,7 +231,7 @@
                     }
                 </style>
 
-                <paper-tree id="tree" on-toggle="onToggle" data='{"name": "Loading..."}'></paper-tree>
+                <ct-paper-tree id="tree" on-toggle="onToggle" data='{"name": "Loading..."}'></ct-paper-tree>
 
                 <script>
 
@@ -261,9 +261,9 @@
                     template.setLoadingState = function(node, enabled) {
 
                         if (enabled) {
-                            node.customStyle['&#45;&#45;paper-tree-toggle-theme'] = 'animation: blinker 1s linear infinite; content: \'⧖\'; margin-left: -21px;';
+                            node.customStyle['&#45;&#45;ct-paper-tree-toggle-theme'] = 'animation: blinker 1s linear infinite; content: \'⧖\'; margin-left: -21px;';
                         } else {
-                            node.customStyle['&#45;&#45;paper-tree-toggle-theme'] = ';';
+                            node.customStyle['&#45;&#45;ct-paper-tree-toggle-theme'] = ';';
                         }
 
                         node.updateStyles();

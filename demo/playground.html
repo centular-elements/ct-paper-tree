@@ -4,14 +4,14 @@
 <head>
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
-    <link rel="import" href="../paper-tree.html" />
+    <link rel="import" href="../ct-paper-tree.html" />
 </head>
 <body>
 <template is="dom-bind">
     <h3>GOT Tree: {{selected.data.name}}</h3>
-    <paper-tree selected="{{selected}}"></paper-tree>
+    <ct-paper-tree selected="{{selected}}"></ct-paper-tree>
     <script>
-        document.querySelector('paper-tree').data = {
+        document.querySelector('ct-paper-tree').data = {
             "name": "GOT",
             "icon": "theaters",
             "open": true,
@@ -36,7 +36,7 @@
 
 <template is="dom-bind">
     <h3>Media Tree</h3>
-    <paper-tree data='{
+    <ct-paper-tree data='{
     "name": "Media Center",
     "icon": "weekend",
     "open": true,
@@ -56,7 +56,7 @@
         "label": "Play",
         "event": "play"
     }]'>
-    </paper-tree>
+    </ct-paper-tree>
 </template>
 </body>
 </html>

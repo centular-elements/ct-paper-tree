@@ -1,8 +1,8 @@
 {
-  "name": "paper-tree",
-  "main": "paper-tree.html",
+  "name": "ct-paper-tree",
+  "main": "ct-paper-tree.html",
   "version": "1.0.3",
-  "description": "A custom element displaying a browsable tree.",
+  "description": "A custom element displaying a browse-able tree.",
   "keywords": [
     "tree",
     "tree-view",
@@ -11,7 +11,7 @@
     "web-components",
     "polymer"
   ],
-  "homepage": "https://github.com/vpusher/paper-tree",
+  "homepage": "https://github.com/vpusher/ct-paper-tree",
   "authors": [
     "Florian Maffini <florian.maffini@free.fr>"
   ],

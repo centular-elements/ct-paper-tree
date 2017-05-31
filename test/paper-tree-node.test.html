@@ -9,17 +9,17 @@
     <script src="../../web-component-tester/browser.js"></script>
 
     <!-- Import the element to test -->
-    <link rel="import" href="../paper-tree-node.html">
+    <link rel="import" href="../ct-paper-tree-node.html">
 </head>
 <body>
 
 <!-- You can use the document as a place to set up your fixtures. -->
-<paper-tree-node></paper-tree-node>
+<ct-paper-tree-node></ct-paper-tree-node>
 
 <script>
-var node = document.querySelector('paper-tree-node');
+var node = document.querySelector('ct-paper-tree-node');
 
-suite('<paper-tree-node>', function() {
+suite('<ct-paper-tree-node>', function() {
 
     test('defines the default "data" property to `null`', function() {
         assert.equal(node.data, null);
