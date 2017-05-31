@@ -17,7 +17,7 @@
 
 <div class="vertical-section-container centered">
 
-    <h3>Basic demo with only one node</h3>
+<!--    <h3>Basic demo with only one node</h3>
 
     <demo-snippet>
         <template>
@@ -33,7 +33,7 @@
 
             </script>
         </template>
-    </demo-snippet>
+    </demo-snippet>-->
 
     <h3>Basic demo with one root node and some children</h3>
     <demo-snippet>
@@ -45,21 +45,64 @@
 
                 // Some children.
                 tree.data = {
-                    "name": "Hello",
+                    "id": "a5f95422-3e56-429d-8a33-cc196c0efd31",
+                    "name": "Everyone@CloudVend",
+                    "icon": "social:group",
+                    "flags": [{
+                        "flag": "member",
+                        "icon": "icons:card-membership"
+                    }],
                     "children": [{
-                        "name": "World"
+                        "id": "0c72b1a4-438b-4e1e-aa54-ebfb8ba5fa67",
+                        "name": "Administrators",
+                        "icon": "social:group"
                     }, {
-                        "name": "There"
+                        "id": "e1a55d5e-9dd5-4c20-b2f5-03409c878eb7",
+                        "name": "Support Managers",
+                        "icon": "social:group"
                     }, {
-                        "name": "You"
+                        "id": "3394a4bd-bb41-475d-b1e6-176f9b90b8ad",
+                        "name": "Support Agents",
+                        "icon": "social:group",
+                        "flags": [{
+                            "flag": "member",
+                            "icon": "icons:card-membership"
+                        }]
                     }]
                 };
+
+                tree.actions = [{
+                    label: 'Join',
+                    icon: 'social:person-add',
+                    event: 'onJoin',
+                    flags: [{
+                        "name": "member",
+                        "condition": false
+                    }]
+                }, {
+                    label: 'Leave',
+                    event: 'onLeave',
+                    icon: 'social:person-outline',
+                    flags: [{
+                        "name": "member",
+                        "condition": true
+                    }]
+                }];
+
+                // Finally adding a listener for that action.
+                tree.addEventListener('onJoin', function(event) {
+                    alert('This is ' + event.detail.data.id);
+                });
+                // Finally adding a listener for that action.
+                tree.addEventListener('onLeave', function(event) {
+                    alert('This is ' + event.detail.data.id);
+                });
             </script>
         </template>
     </demo-snippet>
 
 
-    <h3>Complex tree demo</h3>
+    <!--<h3>Complex tree demo</h3>
     <demo-snippet>
         <template>
             <paper-tree id="tree3"></paper-tree>
@@ -168,9 +211,9 @@
 
             </script>
         </template>
-    </demo-snippet>
+    </demo-snippet>-->
 
-    <h3>Lazy loading demo</h3>
+    <!--<h3>Lazy loading demo</h3>
     <demo-snippet>
         <template>
             <template id="t" is="dom-bind">
@@ -180,7 +223,7 @@
                     }
 
                     #tree {
-                        --paper-tree-toggle-theme: {
+                        &#45;&#45;paper-tree-toggle-theme: {
                             animation: blinker 1s linear infinite;
                             content: '⧖';
                             margin-left: -21px;
@@ -218,9 +261,9 @@
                     template.setLoadingState = function(node, enabled) {
 
                         if (enabled) {
-                            node.customStyle['--paper-tree-toggle-theme'] = 'animation: blinker 1s linear infinite; content: \'⧖\'; margin-left: -21px;';
+                            node.customStyle['&#45;&#45;paper-tree-toggle-theme'] = 'animation: blinker 1s linear infinite; content: \'⧖\'; margin-left: -21px;';
                         } else {
-                            node.customStyle['--paper-tree-toggle-theme'] = ';';
+                            node.customStyle['&#45;&#45;paper-tree-toggle-theme'] = ';';
                         }
 
                         node.updateStyles();
@@ -249,7 +292,7 @@
                 </script>
             </template>
         </template>
-    </demo-snippet>
+    </demo-snippet>-->
 
 </div>
 </body>

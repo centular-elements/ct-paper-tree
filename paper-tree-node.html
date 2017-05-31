@@ -1,5 +1,6 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-icons/iron-icons.html">
+<link rel="import" href="../iron-icons/social-icons.html">
 <link rel="import" href="../iron-icon/iron-icon.html">
 <link rel="import" href="../paper-menu-button/paper-menu-button.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
@@ -92,6 +93,12 @@ Custom property | Description | Default
             padding: 0;
             top: -8px; /* cancel the padding of `paper-icon-button`. */
         }
+        .blinky {
+            animation: blinker 1s linear infinite;
+        }
+        .status {
+            float: right;
+        }
 
         ul {
             margin: 0;
@@ -113,12 +120,21 @@ Custom property | Description | Default
                 <span class$="{{_computeClass(data.*)}}" on-click="toggleChildren"></span>
                 <iron-icon class="node-icon" icon$="{{_computeIcon(data.icon)}}" on-click="select"></iron-icon>
                 <span class="node-name" on-click="select">{{data.name}}</span>
+                <template is="dom-if" if="{{data.flags}}">
+                    <template is="dom-repeat" items="{{data.flags}}">
+                        <iron-icon icon$="{{_computeIcon(item.icon)}}"></iron-icon>
+                        <!--<span>({{item.flag}})</span>-->
+                    </template>
+                </template>
                 <template is="dom-if" if="{{actions}}">
                     <paper-menu-button id="actions">
                         <paper-icon-button icon="more-vert" noink class="dropdown-trigger"></paper-icon-button>
                         <paper-menu class="dropdown-content">
-                            <template is="dom-repeat" items="{{actions}}">
-                                <paper-item on-click="_actionClicked">{{item.label}}</paper-item>
+                            <template is="dom-repeat" items="{{ _computeActions(data) }}">
+                                <paper-item on-click="_actionClicked">
+                                    <iron-icon icon$="{{_computeIcon(item.icon)}}"></iron-icon>
+                                    {{item.label}}
+                                </paper-item>
                             </template>
                         </paper-menu>
                     </paper-menu-button>
@@ -150,11 +166,17 @@ Custom property | Description | Default
              * Data hold by this node (contains the children).
              *
              * Specific data:
-             *
+             * - `data.id`: string representing the node id.
              * - `data.name`: string representing the node name.
              * - `data.icon`: string telling which icon to use (default to 'folder' icon).
+             * - `data.flags`: array containing the status flags of the node.
              * - `data.open`: boolean telling whether the node is expanded or not.
              * - `data.children` array containing the children of the node.
+             *
+             * `flags` Each flag object has the following fields:
+             *
+             * - `.flag`: string representing the status flag.
+             * - `.icon`: string telling which icon to use (default to none).
              */
             data: {
                 type: Object,
@@ -167,8 +189,9 @@ Custom property | Description | Default
              * `actions` available for this node. Each action object has the following fields:
              *
              * - `action.label`: string representing the display name of the menu item.
+             * - `action.icon`: string telling which icon to use (default to none).
              * - `action.event`: string which is the event name to dispatch whenever the item is clicked.
-             *
+             * - `action.flags`: string which is the status name of the node for which, when present, this action will be available
              */
             actions: {
                 type: Array,
@@ -213,8 +236,33 @@ Custom property | Description | Default
             return icon ? icon : 'folder';
         },
 
+        _computeActions: function(node) {
+
+            return this.actions.filter(function (action) {
+                var alwaysAvailable = action.flags === null || action.flags === undefined || action.flags.size === 0;
+                return alwaysAvailable || action.flags.every(function(actionFlag) {
+                            var hasFlag = this._hasFlag(actionFlag.name, node.flags);
+                            return hasFlag === actionFlag.condition;
+                        }.bind(this))
+            }.bind(this));
+        },
+
+        _hasFlag: function(flagName, flags) {
+            return flags !== null && flags !== undefined && flags.findIndex(function (flag) {
+                return flag.flag === flagName;
+            }) > -1
+        },
+
         _actionClicked: function (event) {
             this.fire(event.model.item.event, this);
+        },
+
+        showBusySpinner: function() {
+
+        },
+
+        hideBusySpinner: function() {
+
         },
 
         /**

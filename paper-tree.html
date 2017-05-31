@@ -35,11 +35,17 @@ Example:
              * Data hold by the root node (contains the children).
              *
              * Specific data:
-             *
+             * - `data.id`: string representing the node id.
              * - `data.name`: string representing the node name.
              * - `data.icon`: string telling which icon to use (default to 'folder' icon).
+             * - `data.flags`: array containing the status flags of the node.
              * - `data.open`: boolean telling whether the node is expanded or not.
              * - `data.children` array containing the children of the node.
+             *
+             * `flags` Each flag object has the following fields:
+             *
+             * - `.flag`: string representing the status flag.
+             * - `.icon`: string telling which icon to use (default to none).
              */
             data: {
                 type: Object,
