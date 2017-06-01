@@ -91,11 +91,35 @@
 
                 // Finally adding a listener for that action.
                 tree.addEventListener('onJoin', function(event) {
-                    alert('This is ' + event.detail.data.id);
+                    event.detail.showBusySpinner();
+                    window.setTimeout(function() {
+                        event.detail.data = {
+                            "id": event.detail.data.id,
+                            "name": event.detail.data.name,
+                            "icon": event.detail.data.icon,
+                            "flags": [{
+                                "flag": "member",
+                                "icon": "icons:card-membership"
+                            }],
+                            "open": event.detail.data.open,
+                            "children": event.detail.data.children
+                        };
+                        event.detail.hideBusySpinner();
+                    }, 1000);
                 });
                 // Finally adding a listener for that action.
                 tree.addEventListener('onLeave', function(event) {
-                    alert('This is ' + event.detail.data.id);
+                    event.detail.showBusySpinner();
+                    window.setTimeout(function() {
+                        event.detail.data = {
+                            "id": event.detail.data.id,
+                            "name": event.detail.data.name,
+                            "icon": event.detail.data.icon,
+                            "open": event.detail.data.open,
+                            "children": event.detail.data.children
+                        };
+                        event.detail.hideBusySpinner();
+                    }, 1000);
                 });
             </script>
         </template>

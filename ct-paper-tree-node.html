@@ -41,7 +41,7 @@ Custom property | Description | Default
             color: var(--ct-paper-tree-selected-color, inherit);
         }
 
-        :host(.selected) > .node-container > .node-row > #actions {
+        :host(.selected) > .node-container > .node-row > #actionButton {
             display: inline-block;
         }
 
@@ -87,7 +87,7 @@ Custom property | Description | Default
             @apply(--ct-paper-tree-icon-theme);
         }
 
-        #actions {
+        #actionButton {
             display: none;
             float: right;
             padding: 0;
@@ -112,6 +112,46 @@ Custom property | Description | Default
         [hidden] {
             display: none;
         }
+
+        @-webkit-keyframes rotating /* Safari and Chrome */ {
+            from {
+                -ms-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -webkit-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+            to {
+                -ms-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -webkit-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+        }
+        @keyframes rotating {
+            from {
+                -ms-transform: rotate(0deg);
+                -moz-transform: rotate(0deg);
+                -webkit-transform: rotate(0deg);
+                -o-transform: rotate(0deg);
+                transform: rotate(0deg);
+            }
+            to {
+                -ms-transform: rotate(360deg);
+                -moz-transform: rotate(360deg);
+                -webkit-transform: rotate(360deg);
+                -o-transform: rotate(360deg);
+                transform: rotate(360deg);
+            }
+        }
+        .rotating {
+            -webkit-animation: rotating 2s linear infinite;
+            -moz-animation: rotating 2s linear infinite;
+            -ms-animation: rotating 2s linear infinite;
+            -o-animation: rotating 2s linear infinite;
+            animation: rotating 2s linear infinite;
+        }
     </style>
 
     <template>
@@ -127,10 +167,10 @@ Custom property | Description | Default
                     </template>
                 </template>
                 <template is="dom-if" if="{{actions}}">
-                    <paper-menu-button id="actions">
-                        <paper-icon-button icon="more-vert" noink class="dropdown-trigger"></paper-icon-button>
+                    <paper-menu-button id="actionButton">
+                        <paper-icon-button id="actionIcon" icon="more-vert" noink class="dropdown-trigger"></paper-icon-button>
                         <paper-menu class="dropdown-content">
-                            <template is="dom-repeat" items="{{ _computeActions(data) }}">
+                            <template is="dom-repeat" items="{{ _actions }}">
                                 <paper-item on-click="_actionClicked">
                                     <iron-icon icon$="{{_computeIcon(item.icon)}}"></iron-icon>
                                     {{item.label}}
@@ -170,13 +210,10 @@ Custom property | Description | Default
              * - `data.name`: string representing the node name.
              * - `data.icon`: string telling which icon to use (default to 'folder' icon).
              * - `data.flags`: array containing the status flags of the node.
+             * -    `flag.name`: string representing the status flag.
+             * -    `flag.icon`: string telling which icon to use (default to none).
              * - `data.open`: boolean telling whether the node is expanded or not.
              * - `data.children` array containing the children of the node.
-             *
-             * `flags` Each flag object has the following fields:
-             *
-             * - `.flag`: string representing the status flag.
-             * - `.icon`: string telling which icon to use (default to none).
              */
             data: {
                 type: Object,
@@ -202,6 +239,8 @@ Custom property | Description | Default
 
         },
 
+        observers: ['_dataChanged(actions, data)'],
+
         /**
          * The `select` event is fired whenever `select()` is called on the node.
          *
@@ -213,6 +252,12 @@ Custom property | Description | Default
          *
          * @event toggle
          */
+
+        _dataChanged: function() {
+            if (this.data !== null && this.data !== undefined && this.actions !== null && this.actions !== undefined) {
+                this._actions = this._computeActions(this.data);
+            }
+        },
 
         /**
          * Returns the necessary classes.
@@ -258,11 +303,17 @@ Custom property | Description | Default
         },
 
         showBusySpinner: function() {
-
+            var actionIcon = this.$$('#actionIcon');
+            actionIcon.icon = 'autorenew';
+            actionIcon.classList.add('rotating');
+            this.$$('#actionButton').disabled = true;
         },
 
         hideBusySpinner: function() {
-
+            var actionIcon = this.$$('#actionIcon');
+            actionIcon.icon = 'more-vert';
+            actionIcon.classList.remove('rotating');
+            this.$$('#actionButton').disabled = false;
         },
 
         /**
