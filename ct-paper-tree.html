@@ -17,7 +17,9 @@ Example:
 
     <template>
         <div>
-            <ct-paper-tree-node id="root" data="[[data]]" actions="[[actions]]"></ct-paper-tree-node>
+            <template is="dom-repeat" items="{{data}}">
+                <ct-paper-tree-node data="{{item}}" actions="{{actions}}"></ct-paper-tree-node>
+            </template>
         </div>
     </template>
 
@@ -32,15 +34,15 @@ Example:
         properties: {
 
             /**
-             * Data hold by the root node (contains the children).
+             * Array of root nodes
              *
-             * Specific data:
-             * - `data.id`: string representing the node id.
-             * - `data.name`: string representing the node name.
-             * - `data.icon`: string telling which icon to use (default to 'folder' icon).
-             * - `data.flags`: array containing the status flags of the node.
-             * - `data.open`: boolean telling whether the node is expanded or not.
-             * - `data.children` array containing the children of the node.
+             * Specific node:
+             * - `node.id`: string representing the node id.
+             * - `node.name`: string representing the node name.
+             * - `node.icon`: string telling which icon to use (default to 'folder' icon).
+             * - `node.flags`: array containing the status flags of the node.
+             * - `node.open`: boolean telling whether the node is expanded or not.
+             * - `node.children` array containing the children of the node.
              *
              * `flags` Each flag object has the following fields:
              *
@@ -51,8 +53,7 @@ Example:
                 type: Object,
                 value: function() {
                     return null;
-                },
-                observer: "_dataChanged"
+                }
             },
 
             /**
@@ -75,27 +76,12 @@ Example:
                 type: Array,
                 value: function() {
                     return null;
-                },
-                observer: "_actionsChanged"
+                }
             }
         },
 
         listeners: {
             "select": "_selectNode"
-        },
-
-        /**
-         * Called whenever the data is changed to notify the lower nodes.
-         */
-        _dataChanged: function() {
-            this.$.root.data = this.data;
-        },
-
-        /**
-         * Called whenever the actions list is changed to notify the lower nodes.
-         */
-        _actionsChanged: function() {
-            this.$.root.actions = this.actions;
         },
 
         /**

@@ -181,13 +181,13 @@ Custom property | Description | Default
                 </template>
             </div>
             <template is="dom-if" if="{{data.open}}">
-              <ul>
-                  <template is="dom-repeat" items="{{data.children}}">
-                      <li>
-                          <ct-paper-tree-node data="{{item}}" actions="{{actions}}"></ct-paper-tree-node>
-                      </li>
-                  </template>
-              </ul>
+                <ul>
+                    <template is="dom-repeat" items="{{data.children}}">
+                        <li>
+                            <ct-paper-tree-node data="{{item}}" actions="{{actions}}"></ct-paper-tree-node>
+                        </li>
+                    </template>
+                </ul>
             </template>
         </div>
     </template>
@@ -254,6 +254,7 @@ Custom property | Description | Default
          */
 
         _dataChanged: function() {
+            console.log(this.data);
             if (this.data !== null && this.data !== undefined && this.actions !== null && this.actions !== undefined) {
                 this._actions = this._computeActions(this.data);
                 if (this.data.children == null || this.data.children == undefined || this.data.children.size == 0) {
@@ -296,8 +297,8 @@ Custom property | Description | Default
 
         _hasFlag: function(flagName, flags) {
             return flags !== null && flags !== undefined && flags.findIndex(function (flag) {
-                return flag.flag === flagName;
-            }) > -1
+                        return flag.flag === flagName;
+                    }) > -1
         },
 
         _actionClicked: function (event) {
