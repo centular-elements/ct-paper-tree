@@ -37,10 +37,23 @@
 
     <h3>Basic demo with one root node and some children</h3>
     <demo-snippet>
-        <template>
+        <template id="t">
+            <style is="custom-style">
+                @keyframes blinker {
+                    50% { opacity: 0; }
+                }
+
+                /*#tree2 {
+                    --ct-paper-tree-toggle-theme: {
+                        animation: blinker 1s linear infinite;
+                        content: '⧖';
+                        margin-left: -21px;
+                    };
+                }*/
+            </style>
             <ct-paper-tree id="tree2"></ct-paper-tree>
             <script>
-
+                var template = document.querySelector('#t');
                 var tree = document.querySelector('#tree2');
 
                 // Some children.
@@ -121,6 +134,47 @@
                         event.detail.hideBusySpinner();
                     }, 1000);
                 });
+
+                template.setLoadingState = function(node, enabled) {
+
+                    console.log('Setting load state of ' + node.data.name + ' to ' + enabled);
+                    if (enabled) {
+                        node.customStyle['--ct-paper-tree-toggle-theme'] = 'animation: blinker 1s linear infinite; content: \'⧖\'; margin-left: -21px;';
+                    } else {
+                        node.customStyle['--ct-paper-tree-toggle-theme'] = ';';
+                    }
+
+                    node.updateStyles();
+                },
+
+                tree.addEventListener('loadChildren', function(event) {
+                    if (event.detail.data.id !== 'bla') {
+                        console.log('loading ' + event.detail.data.name + ' children');
+
+                        // Set loading styles
+                        template.setLoadingState(event.detail, true);
+
+                        // Update the children after a random delay
+                        window.setTimeout(function() {
+
+                            event.detail.set('data.children', [{
+                                "id": "bla",
+                                "name": "BlaBla",
+                                "icon": event.detail.data.icon,
+                                "flags": [{
+                                    "flag": "member",
+                                    "icon": "icons:card-membership"
+                                }],
+                                "open": false
+                            }]);
+
+                            // Reset loading styles
+                            template.setLoadingState(event.detail, false);
+
+                        }.bind(this), Math.floor(Math.random() * 2000));
+                    }
+                });
+
             </script>
         </template>
     </demo-snippet>

@@ -256,6 +256,9 @@ Custom property | Description | Default
         _dataChanged: function() {
             if (this.data !== null && this.data !== undefined && this.actions !== null && this.actions !== undefined) {
                 this._actions = this._computeActions(this.data);
+                if (this.data.children == null || this.data.children == undefined || this.data.children.size == 0) {
+                    setTimeout(this.fire.bind(this, "loadChildren", this));
+                }
             }
         },
 
@@ -282,7 +285,6 @@ Custom property | Description | Default
         },
 
         _computeActions: function(node) {
-
             return this.actions.filter(function (action) {
                 var alwaysAvailable = action.flags === null || action.flags === undefined || action.flags.size === 0;
                 return alwaysAvailable || action.flags.every(function(actionFlag) {
