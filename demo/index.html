@@ -57,32 +57,37 @@
                 var tree = document.querySelector('#tree2');
 
                 // Some children.
-                tree.data = {
+                tree.data = [{
                     "id": "a5f95422-3e56-429d-8a33-cc196c0efd31",
-                    "name": "Everyone@CloudVend",
+                    "name": "Everyone",
                     "icon": "social:group",
                     "flags": [{
-                        "flag": "member",
+                        "name": "member",
                         "icon": "icons:card-membership"
                     }],
                     "children": [{
                         "id": "0c72b1a4-438b-4e1e-aa54-ebfb8ba5fa67",
                         "name": "Administrators",
                         "icon": "social:group"
-                    }, {
-                        "id": "e1a55d5e-9dd5-4c20-b2f5-03409c878eb7",
-                        "name": "Support Managers",
-                        "icon": "social:group"
-                    }, {
-                        "id": "3394a4bd-bb41-475d-b1e6-176f9b90b8ad",
-                        "name": "Support Agents",
+                    },{
+                        "id": "1",
+                        "name": "Staff",
                         "icon": "social:group",
-                        "flags": [{
-                            "flag": "member",
-                            "icon": "icons:card-membership"
+                        "children": [{
+                            "id": "e1a55d5e-9dd5-4c20-b2f5-03409c878eb7",
+                            "name": "Support Managers",
+                            "icon": "social:group"
+                        }, {
+                            "id": "3394a4bd-bb41-475d-b1e6-176f9b90b8ad",
+                            "name": "Support Agents",
+                            "icon": "social:group",
+                            "flags": [{
+                                "name": "member",
+                                "icon": "icons:card-membership"
+                            }]
                         }]
                     }]
-                };
+                }];
 
                 tree.actions = [{
                     label: 'Join',
@@ -111,7 +116,7 @@
                             "name": event.detail.data.name,
                             "icon": event.detail.data.icon,
                             "flags": [{
-                                "flag": "member",
+                                "name": "member",
                                 "icon": "icons:card-membership"
                             }],
                             "open": event.detail.data.open,
@@ -162,7 +167,7 @@
                                 "name": "BlaBla",
                                 "icon": event.detail.data.icon,
                                 "flags": [{
-                                    "flag": "member",
+                                    "name": "member",
                                     "icon": "icons:card-membership"
                                 }],
                                 "open": false

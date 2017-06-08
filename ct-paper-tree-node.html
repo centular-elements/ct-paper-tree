@@ -36,13 +36,13 @@ Custom property | Description | Default
 
     <style>
 
-        :host(.selected) > .node-container > .node-row {
+        :host(.selected) > .node-container > .node-row > .node-content {
             background-color: var(--ct-paper-tree-selected-background-color, rgba(200, 200, 200, 0.5));
             color: var(--ct-paper-tree-selected-color, inherit);
         }
 
-        :host(.selected) > .node-container > .node-row > #actionButton {
-            display: inline-block;
+        :host(.selected) > .node-container > .node-row > .node-content > #actionButton {
+            display: inline;
         }
 
         .node-container {
@@ -50,8 +50,19 @@ Custom property | Description | Default
         }
 
         .node-row {
+            cursor: pointer;
             padding-left: 4px;
             padding-right: 4px;
+        }
+
+        .node-column {
+            display: inline-block;
+        }
+
+        .node-content {
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
         }
 
         .node-preicon.collapsed,
@@ -91,8 +102,9 @@ Custom property | Description | Default
             display: none;
             float: right;
             padding: 0;
-            top: -8px; /* cancel the padding of `paper-icon-button`. */
+            margin: 0;
         }
+
         .blinky {
             animation: blinker 1s linear infinite;
         }
@@ -157,28 +169,31 @@ Custom property | Description | Default
     <template>
         <div class="node-container">
             <div class="node-row">
-                <span class$="{{_computeClass(data.*)}}" on-click="toggleChildren"></span>
-                <iron-icon class="node-icon" icon$="{{_computeIcon(data.icon)}}" on-click="select"></iron-icon>
-                <span class="node-name" on-click="select">{{data.name}}</span>
-                <template is="dom-if" if="{{data.flags}}">
+                <div class="node-column">
+                    <span class$="{{_computeClass(data.*)}}" on-tap="toggleChildren"></span>
+                </div>
+                <div class="node-column node-content" on-tap="select">
+                    <iron-icon class="node-icon" icon$="{{_computeIcon(data.icon)}}"></iron-icon>
+                    <span class="node-name">[[data.name]]</span>
                     <template is="dom-repeat" items="{{data.flags}}">
-                        <iron-icon icon$="{{_computeIcon(item.icon)}}"></iron-icon>
-                        <!--<span>({{item.flag}})</span>-->
+                        <template is="dom-if" if="[[item.icon]]">
+                            <iron-icon icon$="[[_computeIcon(item.icon)]]"></iron-icon>
+                        </template>
                     </template>
-                </template>
-                <template is="dom-if" if="{{actions}}">
-                    <paper-menu-button id="actionButton">
-                        <paper-icon-button id="actionIcon" icon="more-vert" noink class="dropdown-trigger"></paper-icon-button>
-                        <paper-menu class="dropdown-content">
-                            <template is="dom-repeat" items="{{ _actions }}">
-                                <paper-item on-click="_actionClicked">
-                                    <iron-icon icon$="{{_computeIcon(item.icon)}}"></iron-icon>
-                                    {{item.label}}
-                                </paper-item>
-                            </template>
-                        </paper-menu>
-                    </paper-menu-button>
-                </template>
+                    <template is="dom-if" if="{{actions}}">
+                        <paper-menu-button id="actionButton">
+                            <iron-icon id="actionIcon" icon="more-vert" noink class="dropdown-trigger"></iron-icon>
+                            <paper-menu class="dropdown-content">
+                                <template is="dom-repeat" items="{{ _actions }}">
+                                    <paper-item on-click="_actionClicked">
+                                        <iron-icon icon$="{{_computeIcon(item.icon)}}"></iron-icon>
+                                        {{item.label}}
+                                    </paper-item>
+                                </template>
+                            </paper-menu>
+                        </paper-menu-button>
+                    </template>
+                </div>
             </div>
             <template is="dom-if" if="{{data.open}}">
                 <ul>
@@ -254,7 +269,6 @@ Custom property | Description | Default
          */
 
         _dataChanged: function() {
-            console.log(this.data);
             if (this.data !== null && this.data !== undefined && this.actions !== null && this.actions !== undefined) {
                 this._actions = this._computeActions(this.data);
                 if (this.data.children == null || this.data.children == undefined || this.data.children.size == 0) {
@@ -297,7 +311,7 @@ Custom property | Description | Default
 
         _hasFlag: function(flagName, flags) {
             return flags !== null && flags !== undefined && flags.findIndex(function (flag) {
-                        return flag.flag === flagName;
+                        return flag.name === flagName;
                     }) > -1
         },
 
